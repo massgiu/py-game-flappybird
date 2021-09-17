@@ -4,7 +4,6 @@ class PipeList():
 
     def __init__(self):
         self.list = [Pipe()]
-        self.count = 0
 
     def add_pipe(self):
         self.list.append(Pipe())

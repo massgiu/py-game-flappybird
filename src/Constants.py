@@ -13,3 +13,4 @@ class Constants:
     PIPE_HOLE = 210
     BIRD_INCREMENT = 0.03
     GROUND_INITIAL_Y = 400
+    SPEED_INCREMENT = 0.01

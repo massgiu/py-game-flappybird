@@ -40,12 +40,14 @@ class Utils:
                     if keys[pygame.K_SPACE]:
                         bird.reset_pos()
                         ground.reset_pos()
-                        pipes.reset_pos()
+                        Pipe.reset() #reset speed and count
+                        pipes.reset_pos() #initialize list
                         restart = True
     @classmethod
     def you_lost(cls, win, bird, ground, pipes):
         win.blit(pygame.image.load("../media/gameover.png"), (50, 180))
         pygame.display.update()
+        print(f"Yor score is {Pipe.count}")
         Utils.restart(bird, ground, pipes)
 
     @classmethod
@@ -61,6 +63,7 @@ class Utils:
             if right_dist_pipe < bird.x: #bird overtake pipe
                 print("overtaken")
                 if right_dist_pipe<0: #remove pipe from list
+                    Pipe.count_pipe()
                     pipes.list.remove(p)
                     print("Deleted pipe")
             elif right_dist_bird>left_dist_pipe:
