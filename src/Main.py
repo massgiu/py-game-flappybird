@@ -1,6 +1,6 @@
 from src.Bird import Bird
 from src.Ground import Ground
-from src.Pipe import Pipe
+from src.PipeList import PipeList
 from src.Utils import Utils
 from src.Constants import Constants
 import pygame
@@ -14,14 +14,15 @@ def main():
 
     bird = Bird()
     ground = Ground()
-    pipe_list = [Pipe()]
+    pipes = PipeList()
+    #pipe_list = [Pipe()]
     while True:
         clock.tick(Constants.FPS) # Now your game will be capped at FPS fps
         bird.move(win)
         ground.move()
-        Utils.move_pipe_list(pipe_list)
-        pipe_list = Utils.check_collision(win, bird, ground, pipe_list)
-        Utils.redrawWindow(win, bird, ground, pipe_list)
+        pipes.move()
+        Utils.check_collision(win, bird, ground, pipes)
+        Utils.redrawWindow(win, bird, ground, pipes)
 
 if __name__ == '__main__':
     main()

@@ -12,15 +12,15 @@ class Utils:
         return pygame.display.set_mode((Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT))
 
     @classmethod
-    def redrawWindow(cls, win, bird, ground, pipe_list):
+    def redrawWindow(cls, win, bird, ground, pipes):
         background = pygame.image.load("../media/background.png")
         win.blit(background, (0,0))
         win.blit(ground.image, (ground.x, ground.y))
-        for p in pipe_list:
+        for p in pipes.list:
             win.blit(p.pipe_up, (p.x, p.pipe_up_y))
             win.blit(p.pipe_down, (p.x, p.pipe_down_y))
-        if pipe_list[-1].x+pipe_list[-1].pipe_down.get_width() < bird.x:
-            pipe_list.append(Pipe())
+        if pipes.list[-1].x+pipes.list[-1].pipe_down.get_width() < bird.x:
+            pipes.add_pipe()
         if (bird.is_too_low()):
             Utils.you_lost(win, bird, ground)
         else:
@@ -28,7 +28,7 @@ class Utils:
         pygame.display.update()  # Updates the screen
 
     @classmethod
-    def restart(cls, bird, ground):
+    def restart(cls, bird, ground, pipes):
         restart = False
         while not restart:
             for event in pygame.event.get():
@@ -40,21 +40,17 @@ class Utils:
                     if keys[pygame.K_SPACE]:
                         bird.reset_pos()
                         ground.reset_pos()
+                        pipes.reset_pos()
                         restart = True
     @classmethod
-    def you_lost(cls, win, bird, ground):
+    def you_lost(cls, win, bird, ground, pipes):
         win.blit(pygame.image.load("../media/gameover.png"), (50, 180))
         pygame.display.update()
-        Utils.restart(bird, ground)
+        Utils.restart(bird, ground, pipes)
 
     @classmethod
-    def move_pipe_list(cls, pipe_list):
-        for elem in pipe_list:
-            elem.move()
-
-    @classmethod
-    def check_collision(cls, win, bird, ground, pipe_list):
-        for p in pipe_list:
+    def check_collision(cls, win, bird, ground, pipes):
+        for p in pipes.list:
             right_dist_bird = bird.x + bird.image.get_width()
             right_dist_pipe = p.x + p.pipe_up.get_width()
             up_dist_bird = bird.y
@@ -65,7 +61,7 @@ class Utils:
             if right_dist_pipe < bird.x: #bird overtake pipe
                 print("overtaken")
                 if right_dist_pipe<0: #remove pipe from list
-                    pipe_list.remove(p)
+                    pipes.list.remove(p)
                     print("Deleted pipe")
             elif right_dist_bird>left_dist_pipe:
                 #print(f"Down side pipe {down_side_pipe}")
@@ -73,6 +69,4 @@ class Utils:
                 print("overlapping x")
                 if up_dist_bird<up_dist_pipe or down_dist_bird>down_dist_pipe:
                     print("Crossing")
-                    Utils.you_lost(win, bird, ground)
-                    pipe_list = [Pipe()] #re-initialize pipe_list
-            return pipe_list
+                    Utils.you_lost(win, bird, ground, pipes)
