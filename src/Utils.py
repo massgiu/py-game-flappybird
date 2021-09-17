@@ -67,13 +67,12 @@ class Utils:
                 if right_dist_pipe<0: #remove pipe from list
                     pipe_list.remove(p)
                     print("Deleted pipe")
-            else:
+            elif right_dist_bird>left_dist_pipe:
                 #print(f"Down side pipe {down_side_pipe}")
                 #print(f"Up side pipe {up_side_pipe}")
-                if right_dist_bird>left_dist_pipe:
-                    print("overlapping x")
-                    if up_dist_bird<up_dist_pipe or down_dist_bird>down_dist_pipe:
-                        print("pipe overlapping")
-                        Utils.you_lost(win, bird, ground)
-                        pipe_list = [pipe_list[-1]] #keep last pipe
+                print("overlapping x")
+                if up_dist_bird<up_dist_pipe or down_dist_bird>down_dist_pipe:
+                    print("Crossing")
+                    Utils.you_lost(win, bird, ground)
+                    pipe_list = [Pipe()] #re-initialize pipe_list
             return pipe_list

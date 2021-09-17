@@ -12,3 +12,4 @@ class Constants:
     OFFSET = 5
     PIPE_HOLE = 210
     BIRD_INCREMENT = 0.03
+    GROUND_INITIAL_Y = 400

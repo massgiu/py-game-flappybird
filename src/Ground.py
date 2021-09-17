@@ -9,7 +9,7 @@ class Ground:
 
     def reset_pos(self):
         self.x = 0
-        self.y = 400
+        self.y = Constants.GROUND_INITIAL_Y
         self.speedx = Constants.INITIAL_SPEED
 
     def move(self):

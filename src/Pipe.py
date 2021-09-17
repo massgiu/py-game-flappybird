@@ -10,8 +10,8 @@ class Pipe:
         self.pipe_down = pygame.image.load("../media/pipe.png")
         # vertical transform True, horizontal transform false
         self.pipe_up = pygame.transform.flip(self.pipe_down, False, True)
+        self.pipe_down_y = self.y + Constants.PIPE_HOLE
+        self.pipe_up_y = self.y - Constants.PIPE_HOLE
 
     def move(self):
         self.x -= Constants.INITIAL_SPEED
-        self.pipe_down_y = self.y + Constants.PIPE_HOLE
-        self.pipe_up_y = self.y - Constants.PIPE_HOLE
