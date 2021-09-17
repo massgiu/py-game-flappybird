@@ -1,15 +1,16 @@
 import pygame
+from src.Constants import Constants
 
-class Base:
+class Ground:
 
     def __init__(self):
         self.reset_pos()
-        self.image =  pygame.image.load("../media/base.png")
+        self.image =  pygame.image.load("../media/ground.png")
 
     def reset_pos(self):
         self.x = 0
         self.y = 400
-        self.speedx = 3
+        self.speedx = Constants.INITIAL_SPEED
 
     def move(self):
         self.x -= self.speedx  # mi sposto vers sx
