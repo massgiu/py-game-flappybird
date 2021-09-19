@@ -4,16 +4,19 @@ from src.Constants import Constants
 
 class Utils:
 
+
     @classmethod
     def initialize(cls):
         # initialize pygame modules
         pygame.init()
+        pygame.font.init()
         pygame.display.set_caption("Flappy Bird")
         return pygame.display.set_mode((Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT))
 
     @classmethod
     def redrawWindow(cls, win, bird, ground, pipes):
         background = pygame.image.load("../media/background.png")
+        myfont = pygame.font.SysFont('Comic Sans MS', 20)
         win.blit(background, (0,0))
         win.blit(ground.image, (ground.x, ground.y))
         for p in pipes.list:
@@ -21,10 +24,13 @@ class Utils:
             win.blit(p.pipe_down, (p.x, p.pipe_down_y))
         if pipes.list[-1].x+pipes.list[-1].pipe_down.get_width() < bird.x:
             pipes.add_pipe()
-        if (bird.is_too_low()):
+        if bird.is_too_low():
             Utils.you_lost(win, bird, ground)
         else:
             win.blit(bird.image, (bird.x, bird.y))
+            #Update text score
+            textsurface = myfont.render(f'Your score is {Pipe.count}', False, (0, 0, 0))
+            win.blit(textsurface, (10, 10))
         pygame.display.update()  # Updates the screen
 
     @classmethod

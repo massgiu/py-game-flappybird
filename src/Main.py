@@ -15,7 +15,6 @@ def main():
     bird = Bird()
     ground = Ground()
     pipes = PipeList()
-    #pipe_list = [Pipe()]
     while True:
         clock.tick(Constants.FPS) # Now your game will be capped at FPS fps
         bird.move(win)
